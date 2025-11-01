@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أطباق الباستا - Hungerstation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex: 1;
+        }
+        
+        .menu-section {
+            flex: 3;
+        }
+        
+        .cart-section {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .category-title {
+            text-align: center;
+            margin: 30px 0 20px;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.5rem;
+        }
+        
+        .pasta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .pasta-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pasta-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .pasta-name {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 2px solid #f1f1f1;
+            padding-bottom: 10px;
+        }
+        
+        .size-options {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            gap: 10px;
+        }
+        
+        .size-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        .size-option.selected {
+            border-color: #3498db;
+            background-color: #e1f0fa;
+            font-weight: bold;
+        }
+        
+        .size-name {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .size-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        
+        .option-group {
+            margin: 15px 0;
+        }
+        
+        .option-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .option-btn {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 8px 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        .option-btn.selected {
+            border-color: #3498db;
+            background-color: #e1f0fa;
+            font-weight: bold;
+        }
+        
+        .cheese-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        .cheese-option.selected {
+            border-color: #3498db;
+            background-color: #e1f0fa;
+            font-weight: bold;
+        }
+        
+        .cheese-text {
+            font-size: 1rem;
+        }
+        
+        .cheese-price {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        
+        .total-price {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            border: 2px dashed #3498db;
+        }
+        
+        .price-amount {
+            color: #e74c3c;
+            font-size: 1.5rem;
+        }
+        
+        .add-to-cart {
+            margin-top: 15px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #27ae60;
+        }
+        
+        .cart-title {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-options {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        .cart-summary {
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .checkout-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .cart-section {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .pasta-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .size-options {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .pasta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .invoice-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .invoice-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .invoice-items {
+            margin-bottom: 20px;
+        }
+        
+        .invoice-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .invoice-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+        
+        .confirmation-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .confirm-btn {
+            flex: 1;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .cancel-btn {
+            flex: 1;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .whatsapp-btn i {
+            font-size: 1.3rem;
+        }
+        
+        .customer-info {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .customer-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .info-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .order-success {
+            text-align: center;
+            padding: 20px;
+            color: #2ecc71;
+        }
+        
+        .order-success i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>أطباق الباستا</h1>
+        <p>اختر صنفك المفضل وخصصه حسب رغبتك</p>
+    </div>
+    
+    <div class="container">
+        <div class="menu-section">
+            <div class="category-title">باستا كبير</div>
+            <div class="pasta-grid" id="large-pasta-container">
+                <!-- سيتم إضافة البطاقات هنا بواسطة JavaScript -->
+            </div>
+            
+            <div class="category-title">باستا وسط</div>
+            <div class="pasta-grid" id="medium-pasta-container">
+                <!-- سيتم إضافة البطاقات هنا بواسطة JavaScript -->
+            </div>
+        </div>
+        
+        <div class="cart-section">
+            <div class="cart-title">سلة التسوق</div>
+            <div class="cart-items" id="cart-items">
+                <div class="empty-cart">السلة فارغة</div>
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>المجموع:</span>
+                    <span id="cart-total">0.00 ر.س</span>
+                </div>
+                <button class="checkout-btn" id="checkout-btn">إتمام الطلب</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="invoice-modal" id="invoice-modal">
+        <div class="invoice-content">
+            <div class="invoice-header">
+                <h2>فاتورة الطلب</h2>
+                <p>يرجى مراجعة الطلب وتأكيده</p>
+            </div>
+            <div class="invoice-items" id="invoice-items">
+                <!-- سيتم إضافة عناصر الفاتورة هنا -->
+            </div>
+            <div class="invoice-total">
+                <span>المجموع:</span>
+                <span id="invoice-total">0.00 ر.س</span>
+            </div>
+            
+            <div class="customer-info">
+                <h3>معلومات العميل</h3>
+                <input type="text" class="info-input" id="customer-name" placeholder="الاسم الكامل">
+                <input type="text" class="info-input" id="customer-phone" placeholder="رقم الهاتف">
+                <input type="text" class="info-input" id="customer-address" placeholder="العنوان">
+                <textarea class="info-input" id="customer-notes" placeholder="ملاحظات إضافية (اختياري)" rows="3"></textarea>
+            </div>
+            
+            <div class="confirmation-buttons">
+                <button class="confirm-btn" id="confirm-order">تأكيد الطلب</button>
+                <button class="cancel-btn" id="cancel-order">إلغاء</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="invoice-modal" id="whatsapp-modal">
+        <div class="invoice-content">
+            <div class="order-success">
+                <i class="fas fa-check-circle"></i>
+                <h2>تم تأكيد طلبك بنجاح!</h2>
+                <p>سيتم إرسال تفاصيل الطلب إلى واتساب لإتمام العملية</p>
+            </div>
+            <button class="whatsapp-btn" id="send-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                إرسال الطلب عبر واتساب
+            </button>
+            <button class="cancel-btn" id="close-success" style="margin-top: 10px;">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+        // بيانات أطباق الباستا
+        const pastaItems = [
+            // باستا كبير
+            {
+                id: 1,
+                name: "نيرا باستا",
+                basePrice: 59.00,
+                type: "large"
+            },
+            {
+                id: 2,
+                name: "مكس باستا",
+                basePrice: 54.00,
+                type: "large"
+            },
+            {
+                id: 3,
+                name: "باستا روبيان",
+                basePrice: 58.00,
+                type: "large"
+            },
+            {
+                id: 4,
+                name: "باستا رومي مدخن",
+                basePrice: 39.00,
+                type: "large"
+            },
+            {
+                id: 5,
+                name: "باستا دجاج",
+                basePrice: 39.00,
+                type: "large"
+            },
+            {
+                id: 6,
+                name: "باستا خضار",
+                basePrice: 37.00,
+                type: "large"
+            },
+            {
+                id: 7,
+                name: "باستا جبن",
+                basePrice: 38.00,
+                type: "large"
+            },
+            {
+                id: 8,
+                name: "باستا شيتوس",
+                basePrice: 41.00,
+                type: "large"
+            },
+            // باستا وسط
+            {
+                id: 9,
+                name: "باستا دجاج وسط",
+                basePrice: 27.00,
+                type: "medium"
+            },
+            {
+                id: 10,
+                name: "نيرا باستا وسط",
+                basePrice: 41.00,
+                type: "medium"
+            },
+            {
+                id: 11,
+                name: "مكس باستا وسط",
+                basePrice: 34.00,
+                type: "medium"
+            },
+            {
+                id: 12,
+                name: "باستا روبيان وسط",
+                basePrice: 37.00,
+                type: "medium"
+            },
+            {
+                id: 13,
+                name: "باستا رومي مدخن وسط",
+                basePrice: 24.00,
+                type: "medium"
+            },
+            {
+                id: 14,
+                name: "باستا خضار وسط",
+                basePrice: 25.00,
+                type: "medium"
+            },
+            {
+                id: 15,
+                name: "باستا جبن وسط",
+                basePrice: 24.00,
+                type: "medium"
+            },
+            {
+                id: 16,
+                name: "باستا شيتوس وسط",
+                basePrice: 28.00,
+                type: "medium"
+            }
+        ];
+
+        // خيارات إضافية
+        const pastaTypes = ["صدف", "بيني"];
+        const sauceTypes = ["أبيض", "أحمر", "ميكس"];
+        const cheesePrice = 5.00;
+        const whatsappNumber = "+201145837674";
+
+        // سلة التسوق
+        let cart = [];
+
+        // عرض أطباق الباستا
+        function displayPastaItems() {
+            const largeContainer = document.getElementById('large-pasta-container');
+            const mediumContainer = document.getElementById('medium-pasta-container');
+            
+            largeContainer.innerHTML = '';
+            mediumContainer.innerHTML = '';
+            
+            pastaItems.forEach((item) => {
+                const container = item.type === 'large' ? largeContainer : mediumContainer;
+                
+                const pastaCard = document.createElement('div');
+                pastaCard.className = 'pasta-card';
+                pastaCard.setAttribute('data-id', item.id);
+                
+                pastaCard.innerHTML = `
+                    <div class="pasta-name">${item.name}</div>
+                    
+                    <div class="size-options">
+                        <div class="size-option ${item.type === 'large' ? 'selected' : ''}" data-size="large" data-price="${item.basePrice}">
+                            <div class="size-name">كبير</div>
+                            <div class="size-price">${item.basePrice} ر.س</div>
+                        </div>
+                        <div class="size-option ${item.type === 'medium' ? 'selected' : ''}" data-size="medium" data-price="${getMediumPrice(item)}">
+                            <div class="size-name">وسط</div>
+                            <div class="size-price">${getMediumPrice(item)} ر.س</div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <div class="option-title">نوع الباستا:</div>
+                        <div class="option-buttons">
+                            ${pastaTypes.map((type, i) => `
+                                <div class="option-btn ${i === 0 ? 'selected' : ''}" data-type="pasta" data-value="${type}">
+                                    ${type}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <div class="option-title">نوع الصوص:</div>
+                        <div class="option-buttons">
+                            ${sauceTypes.map((sauce, i) => `
+                                <div class="option-btn ${i === 0 ? 'selected' : ''}" data-type="sauce" data-value="${sauce}">
+                                    ${sauce}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="cheese-option" data-selected="false">
+                        <div class="cheese-text">إضافة جبنة</div>
+                        <div class="cheese-price">+ ${cheesePrice} ر.س</div>
+                    </div>
+                    
+                    <div class="total-price">
+                        السعر الإجمالي: <span class="price-amount">${item.type === 'large' ? item.basePrice : getMediumPrice(item)}</span> ر.س
+                    </div>
+                    
+                    <button class="add-to-cart">أضف إلى السلة</button>
+                `;
+                
+                container.appendChild(pastaCard);
+                
+                // إضافة أحداث الخيارات
+                addOptionEvents(pastaCard, item);
+            });
+        }
+        
+        // حساب سعر الوسط بناءً على سعر الكبير
+        function getMediumPrice(item) {
+            if (item.type === 'medium') return item.basePrice;
+            
+            // خصم 40% تقريباً من سعر الكبير للحصول على سعر الوسط
+            return Math.round(item.basePrice * 0.6);
+        }
+        
+        // إضافة الأحداث للخيارات
+        function addOptionEvents(card, item) {
+            const sizeOptions = card.querySelectorAll('.size-option');
+            const pastaButtons = card.querySelectorAll('[data-type="pasta"]');
+            const sauceButtons = card.querySelectorAll('[data-type="sauce"]');
+            const cheeseOption = card.querySelector('.cheese-option');
+            const priceElement = card.querySelector('.price-amount');
+            const addToCartButton = card.querySelector('.add-to-cart');
+            
+            let selectedSize = item.type;
+            let selectedSizePrice = item.type === 'large' ? item.basePrice : getMediumPrice(item);
+            
+            // تحديث السعر
+            function updatePrice() {
+                let totalPrice = parseFloat(selectedSizePrice);
+                
+                // إضافة سعر الجبنة إذا تم اختيارها
+                if (cheeseOption.getAttribute('data-selected') === 'true') {
+                    totalPrice += cheesePrice;
+                }
+                
+                priceElement.textContent = totalPrice.toFixed(2);
+                return totalPrice;
+            }
+            
+            // أحداث حجم الباستا
+            sizeOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    sizeOptions.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    
+                    selectedSize = option.getAttribute('data-size');
+                    selectedSizePrice = parseFloat(option.getAttribute('data-price'));
+                    updatePrice();
+                });
+            });
+            
+            // أحداث نوع الباستا
+            pastaButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    pastaButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                });
+            });
+            
+            // أحداث نوع الصوص
+            sauceButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sauceButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                });
+            });
+            
+            // أحداث إضافة الجبنة
+            cheeseOption.addEventListener('click', () => {
+                const isSelected = cheeseOption.getAttribute('data-selected') === 'true';
+                cheeseOption.setAttribute('data-selected', !isSelected);
+                cheeseOption.classList.toggle('selected');
+                updatePrice();
+            });
+            
+            // حدث إضافة إلى السلة
+            addToCartButton.addEventListener('click', () => {
+                const pastaName = item.name;
+                const selectedPastaType = card.querySelector('[data-type="pasta"].selected').textContent;
+                const selectedSauceType = card.querySelector('[data-type="sauce"].selected').textContent;
+                const hasCheese = cheeseOption.getAttribute('data-selected') === 'true';
+                const totalPrice = updatePrice();
+                
+                // إضافة العنصر إلى السلة
+                addToCart({
+                    id: Date.now(), // معرف فريد
+                    name: pastaName,
+                    size: selectedSize,
+                    pastaType: selectedPastaType,
+                    sauceType: selectedSauceType,
+                    cheese: hasCheese,
+                    price: totalPrice
+                });
+            });
+            
+            // تهيئة السعر الأولي
+            updatePrice();
+        }
+        
+        // إضافة عنصر إلى السلة
+        function addToCart(item) {
+            cart.push(item);
+            updateCartDisplay();
+            
+            // عرض رسالة تأكيد
+            alert(`تم إضافة ${item.name} إلى السلة!`);
+        }
+        
+        // تحديث عرض السلة
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            
+            // حساب المجموع الكلي
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotalElement.textContent = total.toFixed(2) + ' ر.س';
+            
+            // إذا كانت السلة فارغة
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart">السلة فارغة</div>';
+                return;
+            }
+            
+            // عرض عناصر السلة
+            cartItemsContainer.innerHTML = '';
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                
+                cartItem.innerHTML = `
+                    <div class="cart-item-details">
+                        <div class="cart-item-name">${item.name} (${item.size === 'large' ? 'كبير' : 'وسط'})</div>
+                        <div class="cart-item-options">
+                            ${item.pastaType} - ${item.sauceType} ${item.cheese ? '- مع جبنة إضافية' : ''}
+                        </div>
+                        <div class="cart-item-price">${item.price.toFixed(2)} ر.س</div>
+                    </div>
+                    <button class="remove-item" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            // إضافة أحداث الحذف
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.currentTarget.getAttribute('data-index'));
+                    removeFromCart(index);
+                });
+            });
+        }
+        
+        // إزالة عنصر من السلة
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+        
+        // عرض الفاتورة
+        function showInvoice() {
+            const invoiceModal = document.getElementById('invoice-modal');
+            const invoiceItemsContainer = document.getElementById('invoice-items');
+            const invoiceTotalElement = document.getElementById('invoice-total');
+            
+            // حساب المجموع الكلي
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            invoiceTotalElement.textContent = total.toFixed(2) + ' ر.س';
+            
+            // عرض عناصر الفاتورة
+            invoiceItemsContainer.innerHTML = '';
+            cart.forEach((item) => {
+                const invoiceItem = document.createElement('div');
+                invoiceItem.className = 'invoice-item';
+                
+                invoiceItem.innerHTML = `
+                    <div>
+                        <div>${item.name} (${item.size === 'large' ? 'كبير' : 'وسط'})</div>
+                        <div style="font-size: 0.9rem; color: #7f8c8d;">
+                            ${item.pastaType} - ${item.sauceType} ${item.cheese ? '- مع جبنة إضافية' : ''}
+                        </div>
+                    </div>
+                    <div>${item.price.toFixed(2)} ر.س</div>
+                `;
+                
+                invoiceItemsContainer.appendChild(invoiceItem);
+            });
+            
+            // عرض الفاتورة
+            invoiceModal.style.display = 'flex';
+        }
+        
+        // إرسال الطلب عبر واتساب
+        function sendWhatsAppMessage() {
+            const customerName = document.getElementById('customer-name').value || 'غير محدد';
+            const customerPhone = document.getElementById('customer-phone').value || 'غير محدد';
+            const customerAddress = document.getElementById('customer-address').value || 'غير محدد';
+            const customerNotes = document.getElementById('customer-notes').value || 'لا توجد ملاحظات';
+            
+            // بناء نص الرسالة
+            let message = `🎯 طلب جديد من Hungerstation\n\n`;
+            message += `👤 اسم العميل: ${customerName}\n`;
+            message += `📞 رقم الهاتف: ${customerPhone}\n`;
+            message += `📍 العنوان: ${customerAddress}\n\n`;
+            message += `📋 تفاصيل الطلب:\n`;
+            
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} (${item.size === 'large' ? 'كبير' : 'وسط'})\n`;
+                message += `   - نوع الباستا: ${item.pastaType}\n`;
+                message += `   - نوع الصوص: ${item.sauceType}\n`;
+                message += `   - ${item.cheese ? 'مع جبنة إضافية' : 'بدون جبنة إضافية'}\n`;
+                message += `   - السعر: ${item.price.toFixed(2)} ر.س\n\n`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            message += `💰 المجموع الكلي: ${total.toFixed(2)} ر.س\n\n`;
+            message += `📝 ملاحظات إضافية: ${customerNotes}`;
+            
+            // ترميز النص لاستخدامه في رابط واتساب
+            const encodedMessage = encodeURIComponent(message);
+            
+            // إنشاء رابط واتساب
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // فتح الرابط في نافذة جديدة
+            window.open(whatsappURL, '_blank');
+        }
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            displayPastaItems();
+            updateCartDisplay();
+            
+            // حدث إتمام الطلب
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('السلة فارغة. يرجى إضافة عناصر إلى السلة أولاً.');
+                    return;
+                }
+                
+                showInvoice();
+            });
+            
+            // حدث تأكيد الطلب
+            document.getElementById('confirm-order').addEventListener('click', () => {
+                const customerName = document.getElementById('customer-name').value;
+                const customerPhone = document.getElementById('customer-phone').value;
+                const customerAddress = document.getElementById('customer-address').value;
+                
+                // التحقق من تعبئة الحقول المطلوبة
+                if (!customerName || !customerPhone || !customerAddress) {
+                    alert('يرجى تعبئة جميع الحقول المطلوبة (الاسم، الهاتف، العنوان)');
+                    return;
+                }
+                
+                // إغلاق نافذة الفاتورة وفتح نافذة التأكيد
+                document.getElementById('invoice-modal').style.display = 'none';
+                document.getElementById('whatsapp-modal').style.display = 'flex';
+            });
+            
+            // حدث إلغاء الطلب
+            document.getElementById('cancel-order').addEventListener('click', () => {
+                document.getElementById('invoice-modal').style.display = 'none';
+            });
+            
+            // حدث إرسال الطلب عبر واتساب
+            document.getElementById('send-whatsapp').addEventListener('click', () => {
+                sendWhatsAppMessage();
+                
+                // إغلاق النافذة وإفراغ السلة
+                document.getElementById('whatsapp-modal').style.display = 'none';
+                cart = [];
+                updateCartDisplay();
+                
+                // إعادة تعيين حقول العميل
+                document.getElementById('customer-name').value = '';
+                document.getElementById('customer-phone').value = '';
+                document.getElementById('customer-address').value = '';
+                document.getElementById('customer-notes').value = '';
+            });
+            
+            // حدث إغلاق نافذة النجاح
+            document.getElementById('close-success').addEventListener('click', () => {
+                document.getElementById('whatsapp-modal').style.display = 'none';
+            });
+            
+            // إغلاق النوافذ عند النقر خارجها
+            document.getElementById('invoice-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'invoice-modal') {
+                    document.getElementById('invoice-modal').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('whatsapp-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'whatsapp-modal') {
+                    document.getElementById('whatsapp-modal').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
